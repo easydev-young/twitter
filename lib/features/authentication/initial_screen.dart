@@ -1,0 +1,225 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:onboarding_flow_part1/constants/gaps.dart';
+import 'package:onboarding_flow_part1/constants/sizes.dart';
+import 'package:onboarding_flow_part1/features/authentication/create_account_screen.dart';
+import 'package:onboarding_flow_part1/features/authentication/widgets/auth_button.dart';
+
+class InitialScreen extends StatelessWidget {
+  const InitialScreen({super.key});
+
+  void _onCreateAccounTap(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const CreateAccountScreen(),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.size40,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Gaps.v40,
+              FaIcon(
+                FontAwesomeIcons.dove,
+                color: Theme.of(context).primaryColor,
+                size: Sizes.size24,
+              ),
+              Gaps.v60,
+              Gaps.v60,
+              const Text(
+                "Do you want to know what's happening in the world right now?",
+                style: TextStyle(
+                  fontSize: Sizes.size32,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Gaps.v60,
+              Gaps.v60,
+              const AuthButton(
+                icon: FaIcon(FontAwesomeIcons.facebook),
+                text: "Continue with Facebook",
+              ),
+              Gaps.v16,
+              const AuthButton(
+                icon: FaIcon(FontAwesomeIcons.apple),
+                text: "Continue with Apple",
+              ),
+              Gaps.v16,
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 1),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: Colors.grey,
+                        thickness: 1.0,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                        'or',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: Colors.grey,
+                        thickness: 1.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () => _onCreateAccounTap(context),
+                child: FractionallySizedBox(
+                  widthFactor: 1,
+                  child: Container(
+                    padding: const EdgeInsets.all(Sizes.size14),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      border: Border.all(
+                        color: Colors.grey.shade300,
+                        width: Sizes.size1,
+                      ),
+                      borderRadius: BorderRadius.circular(Sizes.size28),
+                    ),
+                    child: const Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Text(
+                          'Create account',
+                          style: TextStyle(
+                            fontSize: Sizes.size16,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Gaps.v24,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Text(
+                    'By signing up, you agree to our',
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  Gaps.h5,
+                  Text(
+                    'Terms',
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  const Text(
+                    ',',
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Privacy Policy',
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  const Text(
+                    ',',
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  Gaps.h5,
+                  const Text(
+                    'and',
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  Gaps.h5,
+                  Text(
+                    'Cookie Use',
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  const Text(
+                    '.',
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        elevation: 2,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: Sizes.size3,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Gaps.h24,
+              const Text(
+                'Have an account already?',
+                style: TextStyle(fontSize: Sizes.size16, color: Colors.black54),
+              ),
+              Gaps.h5,
+              Text(
+                'Log in',
+                style: TextStyle(
+                  fontSize: Sizes.size16,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
