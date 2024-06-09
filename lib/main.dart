@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
-import 'package:onboarding_flow_part1/features/authentication/initial_screen.dart';
+import 'package:onboarding_flow_part1/views/sign_up_screen.dart';
 
 void main() {
   runApp(const TikTokApp());
@@ -27,7 +27,7 @@ class TikTokApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const InitialScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
