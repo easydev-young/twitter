@@ -4,6 +4,7 @@ import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/authentication/widgets/app_bar.dart';
 import 'package:onboarding_flow_part1/features/authentication/widgets/form_button.dart';
 import 'package:onboarding_flow_part1/models/user_data.dart';
+import 'package:onboarding_flow_part1/views/email_verification.dart';
 
 class ConfirmAccountScreen extends StatefulWidget {
   const ConfirmAccountScreen({
@@ -21,7 +22,7 @@ class _ConfirmAccountScreenState extends State<ConfirmAccountScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ConfirmAccountScreen(
+        builder: (context) => EmailVerification(
           userData: widget.userData,
         ),
       ),
