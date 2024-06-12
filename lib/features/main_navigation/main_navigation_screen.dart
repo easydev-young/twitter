@@ -25,13 +25,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    //   statusBarColor: Colors.white, // 상태 바 배경 색상을 흰색으로 설정
-    //   statusBarIconBrightness:
-    //       Brightness.dark, // 상태 바 아이콘 색상을 어둡게 설정 (흰색 배경에 잘 보이도록)
-    // ));
-
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Offstage(

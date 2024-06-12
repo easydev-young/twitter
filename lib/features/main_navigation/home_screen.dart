@@ -128,6 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ],
                                         ),
                                         Gaps.v8,
+                                        //이미지 게시물
                                         if (post.images.isEmpty == false)
                                           SizedBox(
                                             height: 200,
@@ -136,20 +137,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                               itemCount: post.images.length,
                                               separatorBuilder:
                                                   (context, index) =>
-                                                      const SizedBox(
-                                                width: Sizes.size8,
-                                              ),
+                                                      const SizedBox(width: 8),
                                               itemBuilder:
                                                   (BuildContext context,
                                                           int index) =>
                                                       ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(
-                                                  Sizes.size16,
-                                                ),
+                                                        Sizes.size16),
                                                 child: Image.asset(
                                                   post.images[index],
-                                                  fit: BoxFit.cover,
+                                                  fit: BoxFit.fill,
                                                   width: 300,
                                                   height: 200,
                                                 ),
