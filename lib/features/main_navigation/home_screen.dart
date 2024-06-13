@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/main_navigation/widgets/avatar_widget.dart';
+import 'package:onboarding_flow_part1/features/main_navigation/widgets/post_Images_widget.dart';
+import 'package:onboarding_flow_part1/features/main_navigation/widgets/post_more.dart';
 import 'package:onboarding_flow_part1/features/main_navigation/widgets/replies_widget.dart';
 import 'package:onboarding_flow_part1/models/posts.dart';
 
@@ -14,6 +17,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  _onTapMore(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const PostMore(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,8 +114,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ),
                                                   Gaps.h12,
                                                   GestureDetector(
-                                                    onTap:
-                                                        null, //() => _onTapMore(context),
+                                                    onTap: () =>
+                                                        _onTapMore(context),
                                                     child: const Icon(
                                                       FontAwesomeIcons.ellipsis,
                                                       size: 16,
@@ -117,7 +129,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Row(
                                           children: [
                                             Flexible(
-                                              // Flexible 위젯을 사용하여 텍스트를 감쌉니다.
                                               child: Text(
                                                 post.content,
                                                 style: const TextStyle(
@@ -130,30 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Gaps.v8,
                                         //이미지 게시물
                                         if (post.images.isEmpty == false)
-                                          SizedBox(
-                                            height: 200,
-                                            child: ListView.separated(
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount: post.images.length,
-                                              separatorBuilder:
-                                                  (context, index) =>
-                                                      const SizedBox(width: 8),
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                          int index) =>
-                                                      ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        Sizes.size16),
-                                                child: Image.asset(
-                                                  post.images[index],
-                                                  fit: BoxFit.fill,
-                                                  width: 300,
-                                                  height: 200,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                          PostImagesWidget(post: post),
                                         Gaps.v12,
                                         const SizedBox(
                                           width: 150,
