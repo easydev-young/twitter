@@ -12,7 +12,11 @@ class PostMore extends StatelessWidget {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => const PostReport(),
-    );
+    ).whenComplete(() => _closeMore(context));
+  }
+
+  void _closeMore(BuildContext context) {
+    Navigator.of(context).pop();
   }
 
   @override
@@ -118,12 +122,16 @@ class PostMore extends StatelessWidget {
                         onTap: () => _onTapReport(context),
                         child: Padding(
                           padding: const EdgeInsets.all(Sizes.size18),
-                          child: Text(
-                            'Report',
-                            style: TextStyle(
-                              color: Colors.red.shade400,
-                              fontSize: Sizes.size16,
-                              fontWeight: FontWeight.w600,
+                          child: SizedBox(
+                            width: 120,
+                            height: 20,
+                            child: Text(
+                              'Report',
+                              style: TextStyle(
+                                color: Colors.red.shade400,
+                                fontSize: Sizes.size16,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),
