@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
-import 'package:onboarding_flow_part1/features/main_navigation/widgets/post_report.dart';
+import 'package:onboarding_flow_part1/features/main_navigation/widgets/report_bottom_sheet.dart';
 
-class PostMore extends StatelessWidget {
-  const PostMore({super.key});
+class MoreBottomSheet extends StatelessWidget {
+  const MoreBottomSheet({super.key});
 
-  void _onTapReport(BuildContext context) async {
-    await showModalBottomSheet(
+  void _onTapReport(BuildContext context) {
+    Navigator.pop(context);
+    showModalBottomSheet(
       context: context,
+      builder: (context) => const ReportBottomSheet(),
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => const PostReport(),
-    ).whenComplete(() => _closeMore(context));
-  }
-
-  void _closeMore(BuildContext context) {
-    Navigator.of(context).pop();
+    );
   }
 
   @override

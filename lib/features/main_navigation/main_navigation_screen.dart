@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:onboarding_flow_part1/features/main_navigation/add_screen.dart';
-import 'package:onboarding_flow_part1/features/main_navigation/notifications.dart';
+import 'package:onboarding_flow_part1/features/discover/discover_screen.dart';
+import 'package:onboarding_flow_part1/features/inbox/activity_screen.dart';
+import 'package:onboarding_flow_part1/features/main_navigation/new_thread_screen.dart';
 import 'package:onboarding_flow_part1/features/main_navigation/profile.dart';
-import 'package:onboarding_flow_part1/features/main_navigation/search_screen.dart';
 import 'package:onboarding_flow_part1/features/main_navigation/home_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
-        builder: (context) => const AddScreen(),
+        builder: (context) => const NewThreadScreen(),
       );
     } else {
       setState(() {
@@ -44,15 +44,15 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: const SearchScreen(),
+            child: const DiscoverScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 2,
-            child: const AddScreen(),
+            child: const NewThreadScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 3,
-            child: const Notifications(),
+            child: const ActivityScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 4,
@@ -61,7 +61,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -70,25 +70,48 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         elevation: 0,
         currentIndex: _selectedIndex,
         onTap: _onTap,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.house),
+            icon: Icon(
+              FontAwesomeIcons.house,
+              color: _selectedIndex == 0 ? Colors.white : Colors.grey,
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.magnifyingGlass),
+            icon: Icon(
+              FontAwesomeIcons.magnifyingGlass,
+              color: _selectedIndex == 0
+                  ? Colors.white
+                  : (_selectedIndex == 1 ? Colors.black : Colors.grey),
+            ),
             label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.penToSquare),
+            icon: Icon(
+              FontAwesomeIcons.penToSquare,
+              color: _selectedIndex == 0
+                  ? Colors.white
+                  : (_selectedIndex == 2 ? Colors.black : Colors.grey),
+            ),
             label: 'Add',
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.heart),
+            icon: Icon(
+              FontAwesomeIcons.heart,
+              color: _selectedIndex == 0
+                  ? Colors.white
+                  : (_selectedIndex == 3 ? Colors.black : Colors.grey),
+            ),
             label: 'Notifications',
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.user),
+            icon: Icon(
+              FontAwesomeIcons.user,
+              color: _selectedIndex == 0
+                  ? Colors.white
+                  : (_selectedIndex == 4 ? Colors.black : Colors.grey),
+            ),
             label: 'Profile',
           ),
         ],

@@ -4,7 +4,7 @@ import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/main_navigation/widgets/avatar_widget.dart';
 import 'package:onboarding_flow_part1/features/main_navigation/widgets/post_Images_widget.dart';
-import 'package:onboarding_flow_part1/features/main_navigation/widgets/post_more.dart';
+import 'package:onboarding_flow_part1/features/main_navigation/widgets/more_bottom_sheet.dart';
 import 'package:onboarding_flow_part1/features/main_navigation/widgets/replies_widget.dart';
 import 'package:onboarding_flow_part1/models/posts.dart';
 
@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => const PostMore(),
+      builder: (context) => const MoreBottomSheet(),
     );
   }
 

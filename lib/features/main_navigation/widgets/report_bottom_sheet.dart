@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 
-class PostReport extends StatelessWidget {
-  const PostReport({super.key});
+class ReportBottomSheet extends StatelessWidget {
+  const ReportBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
