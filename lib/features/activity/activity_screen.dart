@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
+import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
 import 'package:onboarding_flow_part1/models/activity.dart';
 import 'package:onboarding_flow_part1/models/userDb.dart';
+import 'package:provider/provider.dart';
 
 class ActivityScreen extends StatefulWidget {
+  static String routeURL = "/activity";
+  static String routeName = "activity";
   const ActivityScreen({super.key});
 
   @override
@@ -51,12 +55,14 @@ class _ActivityScreenState extends State<ActivityScreen>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
+
     return DefaultTabController(
       length: activityType.length,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
+          backgroundColor: isDark ? Colors.black : Colors.white,
+          surfaceTintColor: isDark ? Colors.black : Colors.white,
           elevation: 1,
           title: const Text(
             'Activity',
@@ -69,7 +75,7 @@ class _ActivityScreenState extends State<ActivityScreen>
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(50),
             child: Container(
-              color: Colors.white,
+              color: isDark ? Colors.black : Colors.white,
               child: TabBar(
                 controller: tabController,
                 isScrollable: true,
@@ -91,8 +97,8 @@ class _ActivityScreenState extends State<ActivityScreen>
                           borderRadius: BorderRadius.circular(10),
                           color:
                               tabController.index == activityType.indexOf(tab)
-                                  ? Colors.black
-                                  : Colors.white,
+                                  ? (isDark ? Colors.white : Colors.black)
+                                  : (isDark ? Colors.black : Colors.white),
                           border: Border.all(
                             color: Colors.grey.shade400,
                             width: 1,
@@ -105,8 +111,8 @@ class _ActivityScreenState extends State<ActivityScreen>
                               fontSize: Sizes.size16,
                               color: tabController.index ==
                                       activityType.indexOf(tab)
-                                  ? Colors.white
-                                  : Colors.black,
+                                  ? (isDark ? Colors.black : Colors.white)
+                                  : (isDark ? Colors.white : Colors.black),
                             ),
                           ),
                         ),
@@ -197,10 +203,10 @@ class _ActivityScreenState extends State<ActivityScreen>
                         title: RichText(
                           text: TextSpan(
                             text: user.nickname,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              color: Colors.black,
                               fontSize: Sizes.size16,
+                              color: isDark ? Colors.white : Colors.black,
                             ),
                             children: [
                               TextSpan(
@@ -245,7 +251,6 @@ class _ActivityScreenState extends State<ActivityScreen>
                                 ),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white,
                                   border: Border.all(
                                     color: Colors.grey.shade400,
                                     width: 1,

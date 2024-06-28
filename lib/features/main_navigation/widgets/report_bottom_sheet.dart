@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
+import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
+import 'package:onboarding_flow_part1/utils.dart';
+import 'package:provider/provider.dart';
 
 class ReportBottomSheet extends StatelessWidget {
   const ReportBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
     final size = MediaQuery.of(context).size;
 
     final List<String> reports = [
@@ -27,6 +31,7 @@ class ReportBottomSheet extends StatelessWidget {
         ),
       ),
       child: Scaffold(
+        backgroundColor: isDark ? Colors.grey.shade900 : null,
         body: Center(
           child: Column(
             children: [
@@ -114,8 +119,7 @@ class ReportBottomSheet extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const Icon(Icons.arrow_forward_ios,
-                            size: Sizes.size18, color: Colors.black54),
+                        const Icon(Icons.arrow_forward_ios, size: Sizes.size18),
                       ],
                     ),
                   ),

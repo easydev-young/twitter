@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/authentication/widgets/app_bar.dart';
-import 'package:onboarding_flow_part1/views/experience_screen.dart';
+import 'package:onboarding_flow_part1/features/views/experience_screen.dart';
 import 'package:onboarding_flow_part1/features/authentication/widgets/form_button.dart';
 import 'package:onboarding_flow_part1/models/user_data.dart';
 

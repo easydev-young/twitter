@@ -2,16 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
+import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
 import 'package:onboarding_flow_part1/models/userDb.dart';
+import 'package:onboarding_flow_part1/utils.dart';
+import 'package:provider/provider.dart';
 
-class DiscoverScreen extends StatefulWidget {
-  const DiscoverScreen({super.key});
+class SearchScreen extends StatefulWidget {
+  static String routeURL = "/search";
+  static String routeName = "search";
+  const SearchScreen({super.key});
 
   @override
-  State<DiscoverScreen> createState() => _DiscoverScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _DiscoverScreenState extends State<DiscoverScreen> {
+class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _textEditingController = TextEditingController();
   List<User> fakeUserData = users;
 
@@ -50,13 +55,15 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
+
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
+          backgroundColor: isDark ? Colors.black : Colors.white,
+          surfaceTintColor: isDark ? Colors.black : Colors.white,
           toolbarHeight: 100,
           elevation: 1,
           title: Column(
@@ -65,7 +72,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               const Text(
                 'Search',
                 style: TextStyle(
-                  color: Colors.black,
                   fontSize: Sizes.size30,
                   fontWeight: FontWeight.w700,
                 ),
@@ -75,11 +81,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 controller: _textEditingController,
                 onChanged: _onSearchChanged,
                 onSubmitted: _onSearchSubmitted,
-                placeholder: 'Search',
-                placeholderStyle: TextStyle(
-                  color: Colors.grey.shade500,
-                  fontSize: 16,
-                ),
+                style: TextStyle(
+                    color: isDarkMode(context) ? Colors.white : Colors.black),
               ),
             ],
           ),
@@ -118,10 +121,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       RichText(
                         text: TextSpan(
                           text: user.nickname,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
                             fontSize: Sizes.size17,
+                            color: isDark ? Colors.white : Colors.black,
                           ),
                           children: [
                             TextSpan(
@@ -168,7 +171,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
                         border: Border.all(
                           color: Colors.grey.shade400,
                           width: 1,
@@ -179,9 +181,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                           user.isFollowed ? 'Following' : 'Follow',
                           style: TextStyle(
                             fontSize: Sizes.size17,
-                            color: user.isFollowed
-                                ? Colors.grey.shade400
-                                : Colors.black,
+                            color:
+                                user.isFollowed ? Colors.grey.shade400 : null,
                           ),
                         ),
                       ),
@@ -193,7 +194,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   color: Colors.grey.shade300,
                   height: 1,
                   thickness: 1,
-                  indent: 72, // Aligns with the avatar's right edge
+                  indent: 72,
                 ),
               ],
             );

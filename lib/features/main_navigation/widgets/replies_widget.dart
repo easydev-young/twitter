@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
+import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
 import 'package:onboarding_flow_part1/models/posts.dart';
+import 'package:onboarding_flow_part1/utils.dart';
+import 'package:provider/provider.dart';
 
 class RepliesWidget extends StatelessWidget {
   const RepliesWidget({
@@ -132,9 +135,9 @@ class RepliesWidget extends StatelessWidget {
           Gaps.h8,
           Text(
             '${post.replies} ${post.replies > 1 ? 'replies' : 'reply'} · ${post.likes} likes',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: Sizes.size16,
-              color: Colors.black26,
+              color: Colors.grey.shade400,
               fontWeight: FontWeight.w600,
             ),
           ),

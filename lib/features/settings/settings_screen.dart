@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/settings/privacy_screen.dart';
+import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
+  static String routeURL = "/settings";
+  static String routeName = "settings";
   const SettingsScreen({super.key});
 
   @override
@@ -33,12 +38,15 @@ class _SettingsScreenState extends State<SettingsScreen>
   }
 
   void _onTapPrivacy(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const PrivacyScreen(),
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => const PrivacyScreen(),
+    //   ),
+    // );
+
+    //context.go("/settings/privacy");
+    context.pushNamed(PrivacyScreen.routeName);
   }
 
   Future<void> _handleLogoutiOS(BuildContext context) async {
@@ -67,9 +75,11 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
         title: const Text(
           'Settings',
@@ -81,17 +91,16 @@ class _SettingsScreenState extends State<SettingsScreen>
         centerTitle: true,
         leading: TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Row(
+          child: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
                 size: 18,
-              ), // Add some space between the icon and text
+              ),
               Text(
                 'Back',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: isDark ? Colors.white : Colors.black,
                   fontSize: 18,
                 ),
               ),
@@ -164,6 +173,30 @@ class _SettingsScreenState extends State<SettingsScreen>
               ),
             ),
             onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(
+              context.read<DisplayConfigViewModel>().darkMode
+                  ? Icons.dark_mode_rounded
+                  : Icons.dark_mode_outlined,
+              size: Sizes.size32,
+            ),
+            title: const Text(
+              "Dark",
+              style: TextStyle(
+                fontSize: Sizes.size16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            trailing: Switch(
+              value: context.watch<DisplayConfigViewModel>().darkMode,
+              activeColor: Colors.blue.shade800,
+              activeTrackColor: Colors.blue.shade200,
+              inactiveThumbColor: Colors.grey.shade700,
+              inactiveTrackColor: Colors.grey.shade300,
+              onChanged: (value) =>
+                  context.read<DisplayConfigViewModel>().setDark(value),
+            ),
           ),
           ListTile(
             leading: const Icon(

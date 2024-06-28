@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
+import 'package:onboarding_flow_part1/features/post/widgets/camera_screen.dart';
+import 'package:onboarding_flow_part1/utils.dart';
 
 class NewThreadScreen extends StatefulWidget {
   const NewThreadScreen({super.key});
@@ -14,6 +19,7 @@ class _AddScreenState extends State<NewThreadScreen> {
   final _newThreadController = TextEditingController();
 
   String _thread = "";
+  final List<File> _attachedFiles = [];
 
   @override
   void initState() {
@@ -31,8 +37,34 @@ class _AddScreenState extends State<NewThreadScreen> {
     super.dispose();
   }
 
+  void _onTapAttach(BuildContext context) async {
+    final files = await Navigator.of(context).push<List<XFile>>(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => const CameraScreen(),
+      ),
+    );
+
+    if (files == null) {
+      return;
+    }
+
+    setState(() {
+      _attachedFiles.addAll(
+        files.map((file) => File(file.path)).toList(),
+      );
+    });
+  }
+
+  void _onRemovePressed(int index) {
+    setState(() {
+      _attachedFiles.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
     final size = MediaQuery.of(context).size;
 
     return Container(
@@ -42,15 +74,15 @@ class _AddScreenState extends State<NewThreadScreen> {
         borderRadius: BorderRadius.circular(Sizes.size14),
       ),
       child: Scaffold(
-        backgroundColor: Colors.grey.shade50,
+        //backgroundColor: Colors.grey.shade50,
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
+          backgroundColor: isDark ? Colors.grey.shade900 : Colors.white,
+          surfaceTintColor: isDark ? Colors.grey.shade900 : Colors.white,
           elevation: 1,
           title: const Text(
             'New thread',
             style: TextStyle(
-              color: Colors.black,
+              //color: Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.w600,
             ),
@@ -155,6 +187,10 @@ class _AddScreenState extends State<NewThreadScreen> {
                               TextField(
                                 controller: _newThreadController,
                                 cursorColor: Colors.blue.shade100,
+                                style: TextStyle(
+                                    color: isDarkMode(context)
+                                        ? Colors.white
+                                        : Colors.black),
                                 scrollPadding: const EdgeInsets.symmetric(
                                     vertical: Sizes.size96),
                                 minLines: 1,
@@ -171,7 +207,9 @@ class _AddScreenState extends State<NewThreadScreen> {
                                     borderSide: BorderSide.none,
                                   ),
                                   filled: true,
-                                  fillColor: Colors.grey.shade100,
+                                  fillColor: isDark
+                                      ? Colors.grey.shade900
+                                      : Colors.grey.shade100,
                                   contentPadding: const EdgeInsets.symmetric(
                                     vertical: Sizes.size10,
                                     horizontal: Sizes.size12,
@@ -179,10 +217,61 @@ class _AddScreenState extends State<NewThreadScreen> {
                                 ),
                               ),
                               Gaps.v20,
-                              const FaIcon(
-                                FontAwesomeIcons.paperclip,
-                                color: Colors.black38,
-                                size: Sizes.size20,
+                              if (_attachedFiles.isNotEmpty)
+                                SizedBox(
+                                  height: 200,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: _attachedFiles.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) =>
+                                            Stack(
+                                      children: [
+                                        Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: Sizes.size6),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                Sizes.size16),
+                                            clipBehavior: Clip.antiAlias,
+                                            child: Image.file(
+                                              _attachedFiles[index],
+                                              fit: BoxFit.fill,
+                                              width: 300,
+                                              height: 200,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: 8,
+                                          right: 8,
+                                          child: GestureDetector(
+                                            onTap: () =>
+                                                _onRemovePressed(index),
+                                            child: Container(
+                                              decoration: const BoxDecoration(
+                                                color: Colors.black38,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              padding: const EdgeInsets.all(4),
+                                              child: const Icon(
+                                                Icons.close_rounded,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              GestureDetector(
+                                onTap: () => _onTapAttach(context),
+                                child: FaIcon(
+                                  FontAwesomeIcons.paperclip,
+                                  color: Colors.grey.shade400,
+                                  size: Sizes.size20,
+                                ),
                               ),
                             ],
                           ),
@@ -235,7 +324,7 @@ class _AddScreenState extends State<NewThreadScreen> {
               ),
             ),
             BottomAppBar(
-              color: Colors.white,
+              //color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

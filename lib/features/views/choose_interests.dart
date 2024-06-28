@@ -6,7 +6,7 @@ import 'package:onboarding_flow_part1/features/authentication/widgets/form_butto
 import 'package:onboarding_flow_part1/features/authentication/widgets/interest_button.dart';
 import 'package:onboarding_flow_part1/models/interests.dart';
 import 'package:onboarding_flow_part1/models/user_data.dart';
-import 'package:onboarding_flow_part1/views/select_subtopics.dart';
+import 'package:onboarding_flow_part1/features/views/select_subtopics.dart';
 
 class ChooseInterests extends StatefulWidget {
   const ChooseInterests({

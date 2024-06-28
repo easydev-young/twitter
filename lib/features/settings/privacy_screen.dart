@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
+import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
+import 'package:provider/provider.dart';
 
 class PrivacyScreen extends StatefulWidget {
+  static String routeURL = "privacy";
+  static String routeName = "privacy";
+
   const PrivacyScreen({super.key});
 
   @override
-  _PrivacyScreenState createState() => _PrivacyScreenState();
+  State<PrivacyScreen> createState() => _PrivacyScreenState();
 }
 
 class _PrivacyScreenState extends State<PrivacyScreen> {
@@ -13,9 +18,11 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
         title: const Text(
           'Privacy',
@@ -27,17 +34,16 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         centerTitle: true,
         leading: TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Row(
+          child: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
                 size: 18,
               ),
               Text(
                 'Back',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: isDark ? Colors.white : Colors.black,
                   fontSize: 18,
                 ),
               ),
@@ -65,14 +71,16 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               style: TextStyle(
                 fontSize: Sizes.size18,
                 fontWeight: FontWeight.w500,
-                color: _isPrivateProfile ? Colors.black : Colors.grey,
+                color: _isPrivateProfile
+                    ? (isDark ? Colors.white : Colors.black)
+                    : Colors.grey.shade400,
               ),
             ),
             trailing: Switch(
               value: _isPrivateProfile,
-              activeColor: Colors.white,
-              activeTrackColor: Colors.black,
-              inactiveThumbColor: Colors.black,
+              activeColor: Colors.blue.shade800,
+              activeTrackColor: Colors.blue.shade200,
+              inactiveThumbColor: Colors.grey.shade700,
               inactiveTrackColor: Colors.grey.shade300,
               onChanged: (bool value) {
                 setState(() {

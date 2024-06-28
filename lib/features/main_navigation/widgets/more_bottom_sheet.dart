@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/main_navigation/widgets/report_bottom_sheet.dart';
+import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
+import 'package:onboarding_flow_part1/utils.dart';
+import 'package:provider/provider.dart';
 
 class MoreBottomSheet extends StatelessWidget {
   const MoreBottomSheet({super.key});
@@ -17,6 +20,7 @@ class MoreBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
     return Container(
       height: 340,
       clipBehavior: Clip.hardEdge,
@@ -26,6 +30,7 @@ class MoreBottomSheet extends StatelessWidget {
         ),
       ),
       child: Scaffold(
+        backgroundColor: isDark ? Colors.grey.shade900 : null,
         body: Center(
           child: Column(
             children: [
@@ -34,7 +39,7 @@ class MoreBottomSheet extends StatelessWidget {
                 width: 45,
                 height: 5,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(Sizes.size3),
                 ),
               ),
@@ -48,7 +53,7 @@ class MoreBottomSheet extends StatelessWidget {
                   width: double.infinity,
                   height: 120,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
+                    color: isDark ? Colors.grey.shade800 : Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(Sizes.size20),
                   ),
                   child: Column(
@@ -93,7 +98,7 @@ class MoreBottomSheet extends StatelessWidget {
                   width: double.infinity,
                   height: 120,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
+                    color: isDark ? Colors.grey.shade800 : Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(Sizes.size20),
                   ),
                   child: Column(

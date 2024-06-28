@@ -6,9 +6,13 @@ import 'package:onboarding_flow_part1/features/main_navigation/widgets/avatar_wi
 import 'package:onboarding_flow_part1/features/main_navigation/widgets/post_Images_widget.dart';
 import 'package:onboarding_flow_part1/features/main_navigation/widgets/more_bottom_sheet.dart';
 import 'package:onboarding_flow_part1/features/main_navigation/widgets/replies_widget.dart';
+import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
 import 'package:onboarding_flow_part1/models/posts.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
+  static String routeURL = "/";
+  static String routeName = "home";
   const HomeScreen({super.key});
 
   @override
@@ -27,13 +31,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
+
     return Scaffold(
       body: Stack(
         children: [
           CustomScrollView(
             slivers: [
-              const SliverAppBar(
-                title: Padding(
+              SliverAppBar(
+                backgroundColor: isDark ? Colors.black : Colors.white,
+                title: const Padding(
                   padding: EdgeInsets.only(top: Sizes.size20), // 상단에 패딩 추가
                   child: Icon(
                     FontAwesomeIcons.threads,
@@ -64,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: VerticalDivider(
                                             width: Sizes.size32,
                                             thickness: 0.5,
-                                            color: Colors.grey.shade600,
+                                            color: Colors.grey.shade400,
                                             indent: 10,
                                           ),
                                         ),
@@ -85,10 +92,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               Text(
                                                 post.username,
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontSize: Sizes.size16,
                                                   fontWeight: FontWeight.w500,
-                                                  color: Colors.black,
+                                                  color: isDark
+                                                      ? null
+                                                      : Colors.black,
                                                 ),
                                               ),
                                               Gaps.h4,
@@ -104,11 +113,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 children: [
                                                   Text(
                                                     post.time,
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                       fontSize: Sizes.size16,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: Colors.black26,
+                                                      color:
+                                                          Colors.grey.shade400,
                                                     ),
                                                   ),
                                                   Gaps.h12,
@@ -177,10 +187,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             //리플리 이미지,..
                             RepliesWidget(post: post),
                             //게시물 구분 라인
-                            const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
                               child: Divider(
-                                color: Colors.black12,
+                                color: Colors.grey.shade400,
                                 thickness: 1.0,
                               ),
                             ),

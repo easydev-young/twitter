@@ -3,7 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/authentication/widgets/app_bar.dart';
-import 'package:onboarding_flow_part1/views/create_account_screen.dart';
+import 'package:onboarding_flow_part1/utils.dart';
+import 'package:onboarding_flow_part1/features/views/create_account_screen.dart';
 import 'package:onboarding_flow_part1/features/authentication/widgets/auth_button.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -37,14 +38,16 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 Gaps.v60,
                 Gaps.v40,
-                const Text(
-                  "Do you want to know what's happening in the world right now?",
-                  style: TextStyle(
-                    fontSize: Sizes.size32,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.black,
+                const Opacity(
+                  opacity: 0.7,
+                  child: Text(
+                    "Do you want to know what's happening in the world right now?",
+                    style: TextStyle(
+                      fontSize: Sizes.size32,
+                      fontWeight: FontWeight.w900,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 Gaps.v60,
                 Gaps.v40,
@@ -126,7 +129,6 @@ class SignUpScreen extends StatelessWidget {
                       'By signing up, you agree to our',
                       style: TextStyle(
                         fontSize: Sizes.size16,
-                        color: Colors.black54,
                       ),
                     ),
                     Gaps.h5,
@@ -161,7 +163,6 @@ class SignUpScreen extends StatelessWidget {
                       ',',
                       style: TextStyle(
                         fontSize: Sizes.size16,
-                        color: Colors.black54,
                       ),
                     ),
                     Gaps.h5,
@@ -169,7 +170,6 @@ class SignUpScreen extends StatelessWidget {
                       'and',
                       style: TextStyle(
                         fontSize: Sizes.size16,
-                        color: Colors.black54,
                       ),
                     ),
                     Gaps.h5,
@@ -185,7 +185,6 @@ class SignUpScreen extends StatelessWidget {
                       '.',
                       style: TextStyle(
                         fontSize: Sizes.size16,
-                        color: Colors.black54,
                       ),
                     ),
                   ],
@@ -196,30 +195,28 @@ class SignUpScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
-        elevation: 0,
+        color: isDarkMode(context) ? null : Colors.grey.shade50,
+        elevation: 1,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: Sizes.size3,
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Text(
+                'Have an account already? ',
+                style: TextStyle(
+                  fontSize: Sizes.size16,
+                ),
+              ),
               Gaps.h24,
-              RichText(
-                text: const TextSpan(
-                  text: 'Have an account already? ',
-                  style:
-                      TextStyle(fontSize: Sizes.size16, color: Colors.black54),
-                  children: [
-                    TextSpan(
-                      text: "Log in",
-                      style: TextStyle(
-                        fontSize: Sizes.size16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blue,
-                      ),
-                    )
-                  ],
+              Text(
+                "Log in",
+                style: TextStyle(
+                  fontSize: Sizes.size16,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ],
