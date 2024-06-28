@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/settings/repos/display_config_repo.dart';
 import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
 import 'package:onboarding_flow_part1/router.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:onboarding_flow_part1/views/sign_up_screen.dart';
 
@@ -15,22 +15,24 @@ void main() async {
   final preferences = await SharedPreferences.getInstance();
   final repository = DisplayConfigRepository(preferences);
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
-        create: (context) => DisplayConfigViewModel(repository),
-      )
-    ],
-    child: const TikTokApp(),
-  ));
+  runApp(
+    ProviderScope(
+      overrides: [
+        displayConfigProvider
+            .overrideWith(() => DisplayConfigViewModel(repository))
+      ],
+      child: const TikTokApp(),
+    ),
+  );
 }
 
-class TikTokApp extends StatelessWidget {
+class TikTokApp extends ConsumerWidget {
   const TikTokApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(displayConfigProvider).darkMode;
+    //context.watch<DisplayConfigViewModel>().darkMode;
     return MaterialApp.router(
       routerConfig: router,
       // debugShowCheckedModeBanner: false,

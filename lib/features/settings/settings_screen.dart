@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/settings/privacy_screen.dart';
 import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
-import 'package:provider/provider.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   static String routeURL = "/settings";
   static String routeName = "settings";
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  SettingsScreenState createState() => SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen>
+class SettingsScreenState extends ConsumerState<SettingsScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   bool _isLoggingOut = false;
@@ -38,14 +38,6 @@ class _SettingsScreenState extends State<SettingsScreen>
   }
 
   void _onTapPrivacy(BuildContext context) {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => const PrivacyScreen(),
-    //   ),
-    // );
-
-    //context.go("/settings/privacy");
     context.pushNamed(PrivacyScreen.routeName);
   }
 
@@ -75,7 +67,7 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
+    final isDark = ref.watch(displayConfigProvider).darkMode;
 
     return Scaffold(
       appBar: AppBar(
@@ -176,7 +168,7 @@ class _SettingsScreenState extends State<SettingsScreen>
           ),
           ListTile(
             leading: Icon(
-              context.read<DisplayConfigViewModel>().darkMode
+              ref.read(displayConfigProvider).darkMode
                   ? Icons.dark_mode_rounded
                   : Icons.dark_mode_outlined,
               size: Sizes.size32,
@@ -189,13 +181,13 @@ class _SettingsScreenState extends State<SettingsScreen>
               ),
             ),
             trailing: Switch(
-              value: context.watch<DisplayConfigViewModel>().darkMode,
+              value: ref.watch(displayConfigProvider).darkMode,
               activeColor: Colors.blue.shade800,
               activeTrackColor: Colors.blue.shade200,
               inactiveThumbColor: Colors.grey.shade700,
               inactiveTrackColor: Colors.grey.shade300,
               onChanged: (value) =>
-                  context.read<DisplayConfigViewModel>().setDark(value),
+                  ref.read(displayConfigProvider.notifier).setDark(value),
             ),
           ),
           ListTile(

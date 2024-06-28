@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
-import 'package:provider/provider.dart';
 
-class PrivacyScreen extends StatefulWidget {
+class PrivacyScreen extends ConsumerStatefulWidget {
   static String routeURL = "privacy";
   static String routeName = "privacy";
 
   const PrivacyScreen({super.key});
 
   @override
-  State<PrivacyScreen> createState() => _PrivacyScreenState();
+  PrivacyScreenState createState() => PrivacyScreenState();
 }
 
-class _PrivacyScreenState extends State<PrivacyScreen> {
+class PrivacyScreenState extends ConsumerState<PrivacyScreen> {
   bool _isPrivateProfile = false;
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
+    final isDark = ref.watch(displayConfigProvider).darkMode;
 
     return Scaffold(
       appBar: AppBar(

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/main_navigation/widgets/report_bottom_sheet.dart';
 import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
-import 'package:onboarding_flow_part1/utils.dart';
-import 'package:provider/provider.dart';
 
-class MoreBottomSheet extends StatelessWidget {
+class MoreBottomSheet extends ConsumerWidget {
   const MoreBottomSheet({super.key});
 
   void _onTapReport(BuildContext context) {
@@ -19,8 +18,8 @@ class MoreBottomSheet extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(displayConfigProvider).darkMode;
     return Container(
       height: 340,
       clipBehavior: Clip.hardEdge,

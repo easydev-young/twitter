@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
 import 'package:onboarding_flow_part1/models/activity.dart';
 import 'package:onboarding_flow_part1/models/userDb.dart';
-import 'package:provider/provider.dart';
 
-class ActivityScreen extends StatefulWidget {
+class ActivityScreen extends ConsumerStatefulWidget {
   static String routeURL = "/activity";
   static String routeName = "activity";
   const ActivityScreen({super.key});
 
   @override
-  State<ActivityScreen> createState() => _ActivityScreenState();
+  ActivityScreenState createState() => ActivityScreenState();
 }
 
-class _ActivityScreenState extends State<ActivityScreen>
+class ActivityScreenState extends ConsumerState<ActivityScreen>
     with TickerProviderStateMixin {
   late final TabController tabController;
   List<User> fakeUserData = users;
@@ -55,7 +55,7 @@ class _ActivityScreenState extends State<ActivityScreen>
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
+    final isDark = ref.watch(displayConfigProvider).darkMode;
 
     return DefaultTabController(
       length: activityType.length,

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
-import 'package:onboarding_flow_part1/utils.dart';
-import 'package:provider/provider.dart';
 
-class ReportBottomSheet extends StatelessWidget {
+class ReportBottomSheet extends ConsumerWidget {
   const ReportBottomSheet({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = context.watch<DisplayConfigViewModel>().darkMode;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(displayConfigProvider).darkMode;
     final size = MediaQuery.of(context).size;
 
     final List<String> reports = [

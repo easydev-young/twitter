@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
-import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
 import 'package:onboarding_flow_part1/models/posts.dart';
-import 'package:onboarding_flow_part1/utils.dart';
-import 'package:provider/provider.dart';
 
 class RepliesWidget extends StatelessWidget {
   const RepliesWidget({
