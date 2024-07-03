@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:onboarding_flow_part1/constants/gaps.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/authentication/widgets/app_bar.dart';
 import 'package:onboarding_flow_part1/utils.dart';
-import 'package:onboarding_flow_part1/features/views/create_account_screen.dart';
+import 'package:onboarding_flow_part1/features/authentication/create_account_screen.dart';
 import 'package:onboarding_flow_part1/features/authentication/widgets/auth_button.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends ConsumerWidget {
+  static const routeURL = "/signUp";
+  static const routeName = "signUp";
   const SignUpScreen({super.key});
 
-  void _onCreateAccounTap(BuildContext context) {
+  void _onCreateAccountTap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const CreateAccountScreen(),
@@ -19,7 +22,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBarWidget(
         leadingType: LeadingType.none,
@@ -91,7 +94,7 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => _onCreateAccounTap(context),
+                  onTap: () => _onCreateAccountTap(context),
                   child: FractionallySizedBox(
                     widthFactor: 1,
                     child: Container(

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:onboarding_flow_part1/constants/sizes.dart';
+import 'package:onboarding_flow_part1/features/authentication/repos/authentication_repo.dart';
 import 'package:onboarding_flow_part1/features/settings/privacy_screen.dart';
 import 'package:onboarding_flow_part1/features/settings/view_models/display_config_vm.dart';
 
@@ -19,8 +20,7 @@ class SettingsScreen extends ConsumerStatefulWidget {
 class SettingsScreenState extends ConsumerState<SettingsScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  bool _isLoggingOut = false;
-  bool _isLoggingOutiOS = false;
+  final bool _isLoggingOut = false;
 
   @override
   void initState() {
@@ -39,30 +39,6 @@ class SettingsScreenState extends ConsumerState<SettingsScreen>
 
   void _onTapPrivacy(BuildContext context) {
     context.pushNamed(PrivacyScreen.routeName);
-  }
-
-  Future<void> _handleLogoutiOS(BuildContext context) async {
-    setState(() {
-      _isLoggingOutiOS = true;
-    });
-    Navigator.of(context).pop();
-    await Future.delayed(const Duration(seconds: 1));
-
-    setState(() {
-      _isLoggingOutiOS = false;
-    });
-  }
-
-  Future<void> _handleLogoutAndroid(BuildContext context) async {
-    setState(() {
-      _isLoggingOut = true;
-    });
-    Navigator.of(context).pop();
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    setState(() {
-      _isLoggingOut = false;
-    });
   }
 
   @override
@@ -220,23 +196,14 @@ class SettingsScreenState extends ConsumerState<SettingsScreen>
           ),
           const Divider(),
           ListTile(
-            title: Row(
+            title: const Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
                     "Log out (iOS)",
                     style: TextStyle(color: Colors.blue),
                   ),
                 ),
-                if (_isLoggingOutiOS)
-                  RotationTransition(
-                    turns: _controller,
-                    child: Icon(
-                      FontAwesomeIcons.spinner,
-                      color: Colors.grey.shade400,
-                      size: 20,
-                    ),
-                  ),
               ],
             ),
             textColor: Colors.blue,
@@ -252,7 +219,10 @@ class SettingsScreenState extends ConsumerState<SettingsScreen>
                       child: const Text("No"),
                     ),
                     CupertinoDialogAction(
-                      onPressed: () => _handleLogoutiOS(context),
+                      onPressed: () {
+                        ref.read(authRepo).signOut();
+                        context.go("/");
+                      },
                       isDestructiveAction: true,
                       child: const Text("Yes"),
                     ),
@@ -294,7 +264,10 @@ class SettingsScreenState extends ConsumerState<SettingsScreen>
                       child: const Text("No"),
                     ),
                     TextButton(
-                      onPressed: () => _handleLogoutAndroid(context),
+                      onPressed: () {
+                        ref.read(authRepo).signOut();
+                        context.go("/");
+                      },
                       child: const Text("Yes"),
                     ),
                   ],

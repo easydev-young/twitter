@@ -4,7 +4,7 @@ import 'package:onboarding_flow_part1/constants/sizes.dart';
 import 'package:onboarding_flow_part1/features/authentication/widgets/app_bar.dart';
 import 'package:onboarding_flow_part1/features/authentication/widgets/form_button.dart';
 import 'package:onboarding_flow_part1/models/user_data.dart';
-import 'package:onboarding_flow_part1/features/views/create_password.dart';
+import 'package:onboarding_flow_part1/features/authentication/create_password.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class EmailVerification extends StatefulWidget {
